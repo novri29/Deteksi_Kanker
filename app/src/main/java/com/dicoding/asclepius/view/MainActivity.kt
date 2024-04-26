@@ -22,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.galleryButton.setOnClickListener { startGallery() }
+        binding.analyzeButton.setOnClickListener {
+            currentImageUri?.let {
+                analyzeImage()
+                moveToResult()
+            }
+        }
     }
 
 
@@ -54,15 +60,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun analyzeImage() {
         // TODO: Menganalisa gambar yang berhasil ditampilkan.
-
+        val intent = Intent(this, ResultActivity::class.java)
     }
 
     private fun moveToResult() {
         val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra(ResultActivity.IMAGE_URI, currentImageUri.toString())
         startActivity(intent)
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "ImagePicker"
     }
 }

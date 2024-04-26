@@ -25,8 +25,6 @@ class ImageClassifierHelper(
     val modelName: String = "cancer_classification.tflite",
     val context: Context,
     val classifierListener: ClassifierListener?,
-    val classifierListenerValue: ClassifierListener?
-
 ) {
     interface ClassifierListener {
         fun onError(error: String)
@@ -88,7 +86,7 @@ class ImageClassifierHelper(
         var inferenceTime = SystemClock.uptimeMillis()
         val results = imageClassifier?.classify(tensorImage)
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
-        classifierListenerValue?.onResults(results, inferenceTime)
+        classifierListener?.onResults(results, inferenceTime)
         return results
     }
 
