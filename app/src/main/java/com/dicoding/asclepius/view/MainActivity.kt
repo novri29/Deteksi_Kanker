@@ -8,13 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 import com.yalantis.ucrop.UCrop
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     private var currentImageUri: Uri? = null
 
@@ -22,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        bottomNavigationView = findViewById(R.id.nav_view)
+        bottomNavigationView.setOnNavigationItemSelectedListener(onBottomNavItemSelectedListener)
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener {
             currentImageUri?.let {
@@ -33,6 +38,16 @@ class MainActivity : AppCompatActivity() {
             currentImageUri?.let { uri ->
                 startUcrop(uri)
             }
+        }
+    }
+
+    private val onBottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_home -> {
+                startMainActivity()
+                true
+            }
+            else -> false
         }
     }
 
@@ -110,6 +125,14 @@ class MainActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    private fun startMainActivity() {
+        if (!this::class.java.simpleName.equals(MainActivity::class.java.simpleName)) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+    }
+
 
     companion object {
         const val TAG = "ImagePicker"

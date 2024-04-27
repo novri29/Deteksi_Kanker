@@ -9,6 +9,6 @@
     <string name="hasil">HASIL</string>
     <string name="simpan">Simpan Hasil</string>
     <string name="home">Home</string>
-    <string name="history">History</string>
-    <string name="news">News</string>
+    <string name="setting">Setting</string>
+    <string name="dark_mode">Dark Theme</string>
 </resources>

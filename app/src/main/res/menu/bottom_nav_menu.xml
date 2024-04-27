@@ -5,13 +5,5 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/baseline_home_24"
         android:title="@string/home" />
-    <item
-        android:id="@+id/navigation_history"
-        android:icon="@drawable/baseline_history_24"
-        android:title="@string/history" />
-    <item
-        android:id="@+id/navigation_news"
-        android:icon="@drawable/baseline_newspaper_24"
-        android:title="@string/news" />
 
 </menu>
