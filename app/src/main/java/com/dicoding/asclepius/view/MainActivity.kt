@@ -29,6 +29,11 @@ class MainActivity : AppCompatActivity() {
                 moveToResult()
             }
         }
+        binding.previewImageView.setOnClickListener {
+            currentImageUri?.let { uri ->
+                startUcrop(uri)
+            }
+        }
     }
 
     private fun startGallery() {
@@ -38,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
     }
+
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -64,11 +70,10 @@ class MainActivity : AppCompatActivity() {
             val error = UCrop.getError(data!!)
             error?.let {
                 Log.e(TAG, "UCrop Error: $it")
-                showToast("Failed to crop image")
+                showToast("Failed Crop Image")
             }
         }
     }
-
 
     private fun startUcrop(uri: Uri) {
         val destinationFileName = "cropped_image"
@@ -76,16 +81,20 @@ class MainActivity : AppCompatActivity() {
         uCrop.withAspectRatio(1f, 1f)
         uCrop.withMaxResultSize(1000, 1000)
         uCrop.start(this)
-
     }
+
 
     private fun showImage() {
         // TODO: Menampilkan gambar sesuai Gallery yang dipilih.
+        // Clear Cache Image untuk Mengambil Crop Baru
+        binding.previewImageView.setImageURI(null)
+
         currentImageUri?.let { uri ->
             Log.e(TAG, "Display Image: $uri")
             binding.previewImageView.setImageURI(uri)
         }
     }
+
 
     private fun analyzeImage() {
         // TODO: Menganalisa gambar yang berhasil ditampilkan.

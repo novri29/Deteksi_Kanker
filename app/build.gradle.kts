@@ -58,4 +58,7 @@ dependencies {
 
     // UCrop
     implementation ("com.github.yalantis:ucrop:2.2.8")
+
+    // Library
+    implementation("com.google.android.material:material:1.11.0")
 }

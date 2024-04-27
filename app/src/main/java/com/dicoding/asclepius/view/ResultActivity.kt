@@ -28,7 +28,6 @@ class ResultActivity : AppCompatActivity() {
                     override fun onError(error: String) {
                         Log.e(TAG, "ERROR : $error")
                     }
-
                     override fun onResults(results: List<Classifications>?, inferenceTime: Long) {
                         if (results != null) {
                             showResults(results)
@@ -61,7 +60,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val IMAGE_URI = "img_uri"
+        const val IMAGE_URI = "ImageUri"
         const val TAG = "ImagePicker"
     }
 }
