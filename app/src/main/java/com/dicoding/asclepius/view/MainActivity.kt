@@ -1,7 +1,6 @@
 package com.dicoding.asclepius.view
 
-import android.Manifest
-import android.content.ContentValues.TAG
+
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.dicoding.asclepius.R
 import com.dicoding.asclepius.databinding.ActivityMainBinding
+import java.io.File
+import com.yalantis.ucrop.UCrop
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun startGallery() {
         // TODO: Mendapatkan gambar dari Gallery.
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -46,8 +46,37 @@ class MainActivity : AppCompatActivity() {
             selectedImg?.let { uri ->
                 currentImageUri = uri
                 showImage()
+                //Ucrop
+                startUcrop(uri)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri = UCrop.getOutput(data!!)
+            resultUri?.let {
+                currentImageUri = it
+                showImage()
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val error = UCrop.getError(data!!)
+            error?.let {
+                Log.e(TAG, "UCrop Error: $it")
+                showToast("Failed to crop image")
+            }
+        }
+    }
+
+
+    private fun startUcrop(uri: Uri) {
+        val destinationFileName = "cropped_image"
+        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, "$destinationFileName.jpg")))
+        uCrop.withAspectRatio(1f, 1f)
+        uCrop.withMaxResultSize(1000, 1000)
+        uCrop.start(this)
+
     }
 
     private fun showImage() {

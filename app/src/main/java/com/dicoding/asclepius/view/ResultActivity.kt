@@ -26,7 +26,6 @@ class ResultActivity : AppCompatActivity() {
                 context = this,
                 classifierListener = object : ImageClassifierHelper.ClassifierListener{
                     override fun onError(error: String) {
-                        TODO("Not yet implemented")
                         Log.e(TAG, "ERROR : $error")
                     }
 
@@ -34,14 +33,14 @@ class ResultActivity : AppCompatActivity() {
                         if (results != null) {
                             showResults(results)
                         } else {
-                            Log.e(TAG, "No results obtained")
+                            Log.e(TAG, "No Results")
                         }
                     }
                 }
             )
             imageClassifierHelper.classifyStaticImage(imageUri)
         } else {
-            Log.e(TAG, "No image URI provided")
+            Log.e(TAG, "No Image")
             finish()
         }
     }

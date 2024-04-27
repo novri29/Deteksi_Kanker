@@ -37,6 +37,7 @@ android {
         viewBinding = true
         mlModelBinding = true
     }
+
 }
 
 dependencies {
@@ -54,4 +55,7 @@ dependencies {
 
     // TODO: Tambahkan Library TensorFlow Lite
     implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+
+    // UCrop
+    implementation ("com.github.yalantis:ucrop:2.2.8")
 }
